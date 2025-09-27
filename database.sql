@@ -1,4 +1,4 @@
--- Create the users table
+
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -7,7 +7,6 @@ CREATE TABLE users (
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Create the bookmarks table
 CREATE TABLE bookmarks (
     id SERIAL PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
