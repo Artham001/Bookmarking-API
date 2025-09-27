@@ -1,14 +1,15 @@
 // Import the Pool class from the pg library
 const { Pool } = require('pg');
+    require('dotenv').config();
 
-// Create a new Pool instance
-const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'bookmarking_db',
-  password: 'artham_17', // Replace with the password you set during PostgreSQL installation
-  port: 5432,
-});
+    const isProduction = process.env.NODE_ENV === 'production';
+    const connectionString = process.env.DATABASE_URL;
 
-// Export the pool object so we can use it in other files
-module.exports = pool;
+    // Use the DATABASE_URL from Render in production, otherwise use local config
+    const pool = new Pool({
+        connectionString: isProduction ? connectionString : `postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@localhost:5432/bookmarking_db`,
+        // In production, Render requires an SSL connection
+        ssl: isProduction ? { rejectUnauthorized: false } : false,
+    });
+
+    module.exports = pool;
